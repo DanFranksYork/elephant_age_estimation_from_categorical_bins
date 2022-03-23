@@ -1,3 +1,9 @@
+---
+title: "Elephant Age Estimation"
+output:
+  md_document:
+    variant: markdown_github
+---
 
 For the elephant data we are working with, ages are assigned to category bins, rather than actual ages. There are problems with this: the chance of being mis-classified is lower if an actual age is in the middle of the age category; also, there would bea bias towards ages within the age class actually being towards the lower end of the class. To deal with this we developed a Bayesian model to estimate age distributions for each individual from the categories, assuming that ages originally come from a Weibull distribution.
 
