@@ -19,22 +19,19 @@ transformed parameters {
   real<lower=0> shape;
   real<lower=0> scale;
   // Thresholds for age classes
-  thresholds[1] = 15;
-  thresholds[2] = 30;
-  thresholds[3] = 45;
-  thresholds[4] = 60;
-  thresholds[5] = 75;
+  thresholds[1] = 5;
+  thresholds[2] = 10;
+  thresholds[3] = 15;
+  thresholds[4] = 20;
+  thresholds[5] = 25;
+  thresholds[6] = 40;
   // Non-centred age. The same as observed_age ~ normal(true_age,sigma_age)
   observed_age = true_age + sigma_age*observed_age_std; // if one sigma for all
   
-  // In a loop to have a different sigma for each individual
-  //for(i in 1:N) {
-  //  observed_age[i] = true_age[i] + sigma_age[i]*observed_age_std[i];
-  //}
-  // Non-centred shape. The same as shape = normal(1.2,0.1)
-  shape = 1.2 + 0.1*shape_std;
-  // Non-centred scale. The same as scale = normal(30,1);
-  scale = 30 + scale_std;
+  // Non-centred shape. The same as shape = normal(0.87,0.2)
+  shape = 1.3 + 0.2*shape_std;
+  // Non-centred scale. The same as scale = normal(30,5);
+  scale = 30 + 5*scale_std;
 }
 
 model {
@@ -47,17 +44,3 @@ model {
   shape_std ~ std_normal();
   scale_std ~ std_normal();
 }
-
-
-
-
-//functions {
-  // 1 - gompertz to give survival to an age
-  // a is the asymtote
-  // b shifts x axis
-  // c + number, 'growth' rate
-  // t number of years (first parameter is response)
-//  real gompertz_lpdf(vector t, real a, real b, real c) {
-//    return sum(log(1-(a * exp(-b*exp(-c*t)))));
-//  }
-//}

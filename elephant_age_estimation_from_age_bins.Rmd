@@ -20,7 +20,7 @@ library(ggdist)
 First let's simulate an age distribution based on a Weibull distribution where we set the shape and scale parameters.
 
 ```{r}
-probs <- dweibull(1:100, shape = 1.2, scale = 30)
+probs <- dweibull(1:100, shape = 1.2, scale = 40)
 probs <- (probs/sum(probs))
 plot(probs) 
 ```
