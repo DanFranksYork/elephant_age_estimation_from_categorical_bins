@@ -1,13 +1,8 @@
 ### Information ####
 # Data collected by Amboseli Trust for Elephants (ATE) 1972-2021
-# Data supplied by Vicki Fishlock, 24th February 2022
-# model to assess the probability distribution of male age using the age category assigned and the survival curve for elephants in the Amboseli National Park population
+# Data supplied by Vicki Fishlock, 24th February 2022 (not provided on github)
 
 # The purpose of this code is to get the parameters for the Weibull prior to use in the age estimation for the other elephant population
-
-#Fit a Weibull model to the elephant data where you have ages. The way you need to do this is to have the data as age reached by the elephant, and then an event column that is 1 if it died at that age (known max age for that elephant) or 0 if it is still living (it lives at *least* to that age).
-#Here is an example of how to do this in brms: https://statwonk.com/bayesian-right-censored-weibull-model.html
-#Also: https://rdrr.io/cran/brms/man/kidney.html
 
 ### Set up ####
 library(tidyverse)
@@ -19,6 +14,7 @@ library(brms)
 library(tidybayes)
 library(ggthemes)
 library(dplyr)
+
 ### Import nodes data ####
 setwd("~/Downloads/ElephantAges")
 all_nodes <- readxl::read_excel('data_raw/Raw_ATE_AllElephants_Lee220118.xlsx')
@@ -54,7 +50,7 @@ rm(ages, all_nodes)
 colnames(age_cens)[1] <- 'age'
 age_cens$age_non0 <- age_cens$age+0.01 # wouldn't run when I allowed age = 0, so increased all values by 0.01 to make it run
 
-age_cens$censor <- as.integer(!as.logical(age_cens$censor))
+age_cens$censor <- as.integer(!as.logical(age_cens$censor)) # Format needed for brms censoring
 
 # Examine default brms priors (male elephants)
 bfit_m_default <- age_cens %>% filter(sex == 'Male') %>%
