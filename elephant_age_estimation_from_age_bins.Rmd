@@ -63,7 +63,7 @@ data.frame(elephants_ls) %>%
 Now we read in the Stan model to estimate ages from the categories based on a Weibull distribution (for real data these will be centred on parameters from fitting to age estimates based on another elephant population)
 
 ```{r}
-latent_age_ordinal_model <- cmdstan_model("elephant_latent_age_ordinal_regression.stan")
+latent_age_ordinal_model <- cmdstan_model("male_age_ordreg_22.07.07b.stan")
 ```
 Fit model with cmndstanr
 
@@ -71,7 +71,7 @@ Fit model with cmndstanr
 age_estimation_fit <- latent_age_ordinal_model$sample(
   data = elephants_ls, 
   chains = 4, 
-  parallel_chains = 1,
+  parallel_chains = 4,
   iter_sampling = 2000
 )
 ```
